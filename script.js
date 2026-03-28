@@ -723,6 +723,13 @@ const initScrollToTopButton = () => {
 // ============================================
 
 const init = () => {
+    // Phase 1: Foundation features
+    initPageLoader();
+    initScrollProgressBar();
+    initMobileMenu();
+    initCustomCursor();
+    initBreadcrumbs();
+
     // Particle background
     initParticleBackground();
 
@@ -751,6 +758,10 @@ const init = () => {
     initRippleEffect();
     initScrollToTopButton();
 
+    // Phase 2: Content sections
+    initBlogFilter();
+    initFAQAccordion();
+
     console.log('✅ Portfolio fully loaded with all premium features!');
 };
 
@@ -769,3 +780,211 @@ document.addEventListener('visibilitychange', () => {
         console.log('Welcome back to the portfolio!');
     }
 });
+
+// ============================================
+// PHASE 1: PAGE LOADER
+// ============================================
+
+const initPageLoader = () => {
+    const loader = document.querySelector('.page-loader');
+    if (!loader) return;
+
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            loader.classList.add('hidden');
+        }, 500);
+    });
+
+    setTimeout(() => {
+        loader.classList.add('hidden');
+    }, 3000);
+};
+
+// ============================================
+// PHASE 1: SCROLL PROGRESS BAR
+// ============================================
+
+const initScrollProgressBar = () => {
+    const progressBar = document.querySelector('.scroll-progress-bar');
+    if (!progressBar) return;
+
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = scrollPercent + '%';
+    }, { passive: true });
+};
+
+// ============================================
+// PHASE 1: MOBILE MENU
+// ============================================
+
+const initMobileMenu = () => {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const menu = document.querySelector('.mobile-menu');
+    const links = document.querySelectorAll('.mobile-nav-link');
+
+    if (!toggle || !menu) return;
+
+    toggle.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', !isOpen);
+        menu.setAttribute('aria-hidden', isOpen);
+    });
+
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            toggle.setAttribute('aria-expanded', false);
+            menu.setAttribute('aria-hidden', true);
+        });
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            toggle.setAttribute('aria-expanded', false);
+            menu.setAttribute('aria-hidden', true);
+        }
+    });
+};
+
+// ============================================
+// PHASE 1: CUSTOM CURSOR
+// ============================================
+
+const initCustomCursor = () => {
+    const cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    document.body.appendChild(cursor);
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = (mouseX - 15) + 'px';
+        cursor.style.top = (mouseY - 15) + 'px';
+    });
+
+    const interactiveElements = document.querySelectorAll('a, button, [role="button"], input, textarea, select');
+
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+    });
+
+    document.addEventListener('mouseleave', () => {
+        cursor.style.display = 'none';
+    });
+
+    document.addEventListener('mouseenter', () => {
+        cursor.style.display = 'block';
+    });
+};
+
+// ============================================
+// PHASE 1: BREADCRUMBS
+// ============================================
+
+const initBreadcrumbs = () => {
+    const navLinks = document.querySelectorAll('nav a[data-section]');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            const section = link.getAttribute('data-section');
+            updateBreadcrumbs(section);
+        });
+    });
+};
+
+function updateBreadcrumbs(sectionId) {
+    const breadcrumbs = document.querySelector('.breadcrumb-current');
+    if (breadcrumbs) {
+        const sectionElement = document.querySelector(`#${sectionId}`);
+        const sectionTitle = sectionElement?.querySelector('.section-title')?.textContent ||
+                            sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+        breadcrumbs.textContent = sectionTitle;
+    }
+}
+
+// ============================================
+// PHASE 2: BLOG FILTERING AND SEARCH
+// ============================================
+
+const initBlogFilter = () => {
+    const searchInput = document.getElementById('blogSearch');
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const blogCards = document.querySelectorAll('.blog-card');
+
+    if (!searchInput) return;
+
+    const filterBlogs = () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeCategory = document.querySelector('.category-btn.active')?.dataset.category || 'all';
+
+        blogCards.forEach(card => {
+            const category = card.dataset.category;
+            const title = card.querySelector('.blog-title')?.textContent.toLowerCase() || '';
+            const excerpt = card.querySelector('.blog-excerpt')?.textContent.toLowerCase() || '';
+
+            const matchesSearch = title.includes(searchTerm) || excerpt.includes(searchTerm);
+            const matchesCategory = activeCategory === 'all' || category === activeCategory;
+
+            if (matchesSearch && matchesCategory) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    };
+
+    searchInput.addEventListener('input', filterBlogs);
+
+    categoryButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            categoryButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterBlogs();
+        });
+    });
+};
+
+// ============================================
+// PHASE 2: FAQ ACCORDION
+// ============================================
+
+const initFAQAccordion = () => {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const header = item.querySelector('.faq-header');
+        const content = item.querySelector('.faq-content');
+
+        if (!header || !content) return;
+
+        header.addEventListener('click', () => {
+            const isOpen = item.getAttribute('open') !== null;
+
+            if (isOpen) {
+                item.removeAttribute('open');
+                content.style.display = 'none';
+                header.setAttribute('aria-expanded', false);
+            } else {
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.getAttribute('open') !== null) {
+                        otherItem.removeAttribute('open');
+                        otherItem.querySelector('.faq-content').style.display = 'none';
+                        otherItem.querySelector('.faq-header').setAttribute('aria-expanded', false);
+                    }
+                });
+
+                item.setAttribute('open', '');
+                content.style.display = 'block';
+                header.setAttribute('aria-expanded', true);
+            }
+        });
+    });
+};
+

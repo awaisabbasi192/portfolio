@@ -13,6 +13,17 @@
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
+    <!-- Page Loader Animation -->
+    <div class="page-loader">
+        <div class="loader-content">
+            <div class="loader-circle"></div>
+            <p class="loader-text">Loading your portfolio...</p>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress-bar"></div>
+
     <!-- Particle Background -->
     <canvas id="particleCanvas" class="particle-background"></canvas>
 
@@ -27,10 +38,11 @@
                 <nav class="navigation">
                     <a href="#home" class="nav-link" data-section="home">Home</a>
                     <a href="#about" class="nav-link" data-section="about">About</a>
+                    <a href="#services" class="nav-link" data-section="services">Services</a>
                     <a href="#experience" class="nav-link" data-section="experience">Experience</a>
                     <a href="#projects" class="nav-link" data-section="projects">Projects</a>
-                    <a href="#skills" class="nav-link" data-section="skills">Skills</a>
-                    <a href="#testimonials" class="nav-link" data-section="testimonials">Reviews</a>
+                    <a href="#blog" class="nav-link" data-section="blog">Blog</a>
+                    <a href="#faq" class="nav-link" data-section="faq">FAQ</a>
                     <a href="#contact" class="nav-link" data-section="contact">Contact</a>
                 </nav>
                 <div class="header-actions">
@@ -38,8 +50,31 @@
                         <span class="icon">🌙</span>
                     </button>
                 </div>
+
+                <!-- Mobile Menu Toggle Button -->
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                    <span class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
             </div>
         </div>
+
+        <!-- Mobile Navigation Menu -->
+        <nav class="mobile-menu" aria-hidden="true">
+            <ul class="mobile-menu-list">
+                <li><a href="#home" class="mobile-nav-link" data-section="home">Home</a></li>
+                <li><a href="#about" class="mobile-nav-link" data-section="about">About</a></li>
+                <li><a href="#services" class="mobile-nav-link" data-section="services">Services</a></li>
+                <li><a href="#experience" class="mobile-nav-link" data-section="experience">Experience</a></li>
+                <li><a href="#projects" class="mobile-nav-link" data-section="projects">Projects</a></li>
+                <li><a href="#blog" class="mobile-nav-link" data-section="blog">Blog</a></li>
+                <li><a href="#faq" class="mobile-nav-link" data-section="faq">FAQ</a></li>
+                <li><a href="#contact" class="mobile-nav-link" data-section="contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- Main Content -->
@@ -136,6 +171,194 @@
                             <div class="stat-label">Projects Completed</div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="container">
+                <h2 class="section-title">Services & Expertise</h2>
+                <p class="section-subtitle">Comprehensive cybersecurity and project management solutions</p>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">Cybersecurity Analysis</h3>
+                        <p class="service-description">Comprehensive threat assessment, vulnerability scanning, and security audits to protect your digital assets.</p>
+                        <a href="#" class="service-link">Learn more →</a>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"></path>
+                                <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">Compliance & AML</h3>
+                        <p class="service-description">Anti-Money Laundering compliance reporting and regulatory requirements management.</p>
+                        <a href="#" class="service-link">Learn more →</a>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="9" y1="9" x2="15" y2="9"></line>
+                                <line x1="9" y1="15" x2="15" y2="15"></line>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">Project Management</h3>
+                        <p class="service-description">End-to-end project planning, execution, and monitoring with proven methodologies.</p>
+                        <a href="#" class="service-link">Learn more →</a>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 20.627 0 14 5.373 2 12 2z"></path>
+                                <path d="M12 6v6l4 2"></path>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">Threat Analysis</h3>
+                        <p class="service-description">Real-time monitoring, incident response, and malware detection services.</p>
+                        <a href="#" class="service-link">Learn more →</a>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">Security Consulting</h3>
+                        <p class="service-description">Strategic advice and implementation of security best practices and frameworks.</p>
+                        <a href="#" class="service-link">Learn more →</a>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">Digital Forensics</h3>
+                        <p class="service-description">Evidence collection, analysis, and investigation of digital incidents.</p>
+                        <a href="#" class="service-link">Learn more →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog & Articles Section -->
+        <section id="blog" class="blog">
+            <div class="container">
+                <h2 class="section-title">Latest Articles</h2>
+                <p class="section-subtitle">Insights on cybersecurity, project management, and digital transformation</p>
+
+                <!-- Blog Search & Filter -->
+                <div class="blog-controls">
+                    <div class="blog-search">
+                        <input type="text" id="blogSearch" class="blog-search-input" placeholder="Search articles...">
+                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </div>
+                    <div class="blog-categories">
+                        <button class="category-btn active" data-category="all">All</button>
+                        <button class="category-btn" data-category="cybersecurity">Cybersecurity</button>
+                        <button class="category-btn" data-category="management">Management</button>
+                        <button class="category-btn" data-category="development">Development</button>
+                        <button class="category-btn" data-category="trends">Trends</button>
+                    </div>
+                </div>
+
+                <!-- Blog Posts Grid -->
+                <div class="blog-grid">
+                    <article class="blog-card" data-category="cybersecurity">
+                        <div class="blog-image" style="background: linear-gradient(135deg, #4a90e2, #00d4ff);"></div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Cybersecurity</span>
+                                <span class="blog-date">Mar 28, 2025</span>
+                            </div>
+                            <h3 class="blog-title">Top 5 Cybersecurity Threats in 2025</h3>
+                            <p class="blog-excerpt">Understanding emerging threats and how to protect your organization against modern cyber attacks.</p>
+                            <a href="#" class="blog-link">Read more →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="management">
+                        <div class="blog-image" style="background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Management</span>
+                                <span class="blog-date">Mar 25, 2025</span>
+                            </div>
+                            <h3 class="blog-title">Agile Project Management Best Practices</h3>
+                            <p class="blog-excerpt">Learn effective strategies for managing complex projects with agile methodologies and team collaboration.</p>
+                            <a href="#" class="blog-link">Read more →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="development">
+                        <div class="blog-image" style="background: linear-gradient(135deg, #f093fb, #f5576c);"></div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Development</span>
+                                <span class="blog-date">Mar 22, 2025</span>
+                            </div>
+                            <h3 class="blog-title">Python Security Libraries Explained</h3>
+                            <p class="blog-excerpt">A comprehensive guide to using Python libraries for secure coding and security implementation.</p>
+                            <a href="#" class="blog-link">Read more →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="trends">
+                        <div class="blog-image" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Trends</span>
+                                <span class="blog-date">Mar 20, 2025</span>
+                            </div>
+                            <h3 class="blog-title">AI in Cybersecurity: The Future is Here</h3>
+                            <p class="blog-excerpt">How artificial intelligence is revolutionizing threat detection and incident response.</p>
+                            <a href="#" class="blog-link">Read more →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="cybersecurity">
+                        <div class="blog-image" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Cybersecurity</span>
+                                <span class="blog-date">Mar 18, 2025</span>
+                            </div>
+                            <h3 class="blog-title">Zero Trust Architecture Explained</h3>
+                            <p class="blog-excerpt">Understanding the principles of zero trust security and implementing it in your organization.</p>
+                            <a href="#" class="blog-link">Read more →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card" data-category="development">
+                        <div class="blog-image" style="background: linear-gradient(135deg, #fa709a, #fee140);"></div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Development</span>
+                                <span class="blog-date">Mar 15, 2025</span>
+                            </div>
+                            <h3 class="blog-title">Secure Web Development Practices</h3>
+                            <p class="blog-excerpt">Essential security practices every web developer should know to build safer applications.</p>
+                            <a href="#" class="blog-link">Read more →</a>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -503,6 +726,158 @@
                     <button class="carousel-btn prev" aria-label="Previous testimonial">❮</button>
                     <div class="carousel-dots"></div>
                     <button class="carousel-btn next" aria-label="Next testimonial">❯</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Find answers to common questions about my services and expertise</p>
+
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-header" aria-expanded="false">
+                            <span class="faq-title">What cybersecurity services do you offer?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-content" style="display: none;">
+                            <p>I offer comprehensive cybersecurity services including vulnerability assessments, threat analysis, security audits, malware detection, and compliance reporting. I specialize in identifying security gaps and implementing solutions to protect digital assets.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-header" aria-expanded="false">
+                            <span class="faq-title">How experienced are you in project management?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-content" style="display: none;">
+                            <p>I have hands-on experience in managing multiple projects from planning to execution. I'm skilled in agile methodologies, resource allocation, timeline management, and stakeholder communication to ensure successful project delivery.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-header" aria-expanded="false">
+                            <span class="faq-title">What is your background in AML compliance?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-content" style="display: none;">
+                            <p>I completed an internship in Anti-Money Laundering (AML) at the Federal Board of Revenue, where I gained practical experience in compliance reporting, regulatory requirements, and cyber-related investigations. I understand both technical and regulatory aspects of AML.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-header" aria-expanded="false">
+                            <span class="faq-title">Do you offer training or consulting sessions?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-content" style="display: none;">
+                            <p>Yes, I offer consulting sessions and training on cybersecurity concepts, threat analysis, and project management. Custom training programs can be tailored to your organization's specific needs and skill levels.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-header" aria-expanded="false">
+                            <span class="faq-title">What programming languages do you work with?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-content" style="display: none;">
+                            <p>I primarily work with Python for security scripting and analysis. I also have experience with web development technologies including HTML, CSS, and JavaScript. I'm continuously learning and adapting to new tools and technologies.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-header" aria-expanded="false">
+                            <span class="faq-title">How can I get in touch with you for a project?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-content" style="display: none;">
+                            <p>You can reach me through the contact form on this portfolio, via email at zarqa028@gmail.com, or through my LinkedIn profile. I typically respond within 24 hours and am happy to discuss your project requirements.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificates & Awards Section -->
+        <section id="certificates" class="certificates">
+            <div class="container">
+                <h2 class="section-title">Certifications & Awards</h2>
+                <p class="section-subtitle">Professional credentials and recognition</p>
+
+                <div class="certificates-grid">
+                    <div class="certificate-card">
+                        <div class="certificate-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="certificate-title">Cybersecurity Fundamentals</h3>
+                        <p class="certificate-issuer">SUPERIOR University</p>
+                        <p class="certificate-date">2024</p>
+                        <p class="certificate-description">Comprehensive certification in cybersecurity fundamentals including threat analysis, malware detection, and security best practices.</p>
+                    </div>
+
+                    <div class="certificate-card">
+                        <div class="certificate-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="certificate-title">Anti-Money Laundering (AML) Specialist</h3>
+                        <p class="certificate-issuer">Federal Board of Revenue</p>
+                        <p class="certificate-date">2023</p>
+                        <p class="certificate-description">Internship certification with hands-on experience in AML compliance reporting and regulatory requirements.</p>
+                    </div>
+
+                    <div class="certificate-card">
+                        <div class="certificate-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="certificate-title">Python for Security</h3>
+                        <p class="certificate-issuer">Professional Development</p>
+                        <p class="certificate-date">2024</p>
+                        <p class="certificate-description">Advanced certification in Python programming for security applications and threat analysis automation.</p>
+                    </div>
+
+                    <div class="certificate-card">
+                        <div class="certificate-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="certificate-title">Project Management Excellence Award</h3>
+                        <p class="certificate-issuer">SUPERIOR University</p>
+                        <p class="certificate-date">2023</p>
+                        <p class="certificate-description">Recognition for outstanding project management and successful delivery of complex assignments.</p>
+                    </div>
+
+                    <div class="certificate-card">
+                        <div class="certificate-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="certificate-title">Digital Forensics</h3>
+                        <p class="certificate-issuer">Professional Development</p>
+                        <p class="certificate-date">2024</p>
+                        <p class="certificate-description">Certification in digital forensics covering evidence collection, analysis, and incident investigation.</p>
+                    </div>
+
+                    <div class="certificate-card">
+                        <div class="certificate-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="certificate-title">Security Awareness Training</h3>
+                        <p class="certificate-issuer">Industry Partner</p>
+                        <p class="certificate-date">2024</p>
+                        <p class="certificate-description">Comprehensive training in security awareness and best practices for organizational security culture.</p>
+                    </div>
                 </div>
             </div>
         </section>
