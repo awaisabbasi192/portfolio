@@ -329,6 +329,11 @@ const initContactForm = () => {
     const form = document.getElementById('contactForm');
     if (!form) return;
 
+    // Initialize EmailJS
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init('YOUR_EMAILJS_PUBLIC_KEY');
+    }
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -362,11 +367,22 @@ const initContactForm = () => {
 
         if (!isValid) return;
 
-        // Simulate sending (in production, this would call your backend)
+        // Show sending status
         statusEl.textContent = 'Sending...';
         statusEl.className = 'form-status show';
 
-        setTimeout(() => {
+        try {
+            // Send email via EmailJS
+            if (typeof emailjs !== 'undefined') {
+                await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+                    from_name: data.name,
+                    from_email: data.email,
+                    to_email: 'zarqa028@gmail.com',
+                    subject: data.subject,
+                    message: data.message
+                });
+            }
+
             statusEl.textContent = '✓ Message sent successfully! I\'ll get back to you soon.';
             statusEl.className = 'form-status show success';
             form.reset();
@@ -374,7 +390,15 @@ const initContactForm = () => {
             setTimeout(() => {
                 statusEl.classList.remove('show');
             }, 5000);
-        }, 1500);
+        } catch (error) {
+            console.error('Error sending email:', error);
+            statusEl.textContent = '✗ Error sending message. Please try again.';
+            statusEl.className = 'form-status show error';
+
+            setTimeout(() => {
+                statusEl.classList.remove('show');
+            }, 5000);
+        }
     });
 
     function showError(form, fieldName, message) {
@@ -766,6 +790,9 @@ const init = () => {
     initNewsletterForm();
     initSocialShare();
 
+    // Phase 5: Backend integration
+    initGitHubRepos();
+
     console.log('✅ Portfolio fully loaded with all premium features!');
 };
 
@@ -1055,5 +1082,28 @@ const initSocialShare = () => {
             card.appendChild(shareDiv);
         }
     });
+};
+
+// ============================================
+// PHASE 5: GITHUB API INTEGRATION
+// ============================================
+
+const initGitHubRepos = async () => {
+    const githubUsername = 'awaisabbasi192'; // Replace with your GitHub username
+    const repoContainer = document.querySelector('.projects-grid');
+
+    if (!repoContainer) return;
+
+    try {
+        const response = await fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=6`);
+        const repos = await response.json();
+
+        if (!Array.isArray(repos)) return;
+
+        // Add repos to projects section (optional - depends on your needs)
+        console.log('GitHub repositories loaded:', repos.length);
+    } catch (error) {
+        console.error('Error loading GitHub repositories:', error);
+    }
 };
 
