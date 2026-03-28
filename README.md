@@ -56,7 +56,7 @@ A modern, responsive portfolio website showcasing my expertise in cybersecurity,
 
 ## Live Demo
 
-Visit: [Your GitHub Pages URL]
+Visit: https://awaisabbasi192.github.io/portfolio
 
 ## Contact
 
