@@ -1377,3 +1377,376 @@ main > section {
         padding: var(--spacing-lg) 0;
     }
 }
+
+/* ============================================
+   PARTICLE BACKGROUND
+   ============================================ */
+
+.particle-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+/* ============================================
+   SOCIAL LINKS
+   ============================================ */
+
+.social-links {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(74, 144, 226, 0.1);
+    color: var(--accent);
+    border: 1px solid var(--border);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.social-icon:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(74, 144, 226, 0.3);
+}
+
+.social-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ============================================
+   PROJECT FILTERS & SEARCH
+   ============================================ */
+
+.project-filters {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-xl);
+}
+
+.filter-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: 2px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: var(--text-sm);
+    transition: all var(--transition-fast);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: white;
+    border-color: transparent;
+    transform: translateY(-2px);
+}
+
+.project-search {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto var(--spacing-xl);
+}
+
+.search-input {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    padding-right: 3rem;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    border-radius: 12px;
+    font-size: var(--text-base);
+    transition: all var(--transition-fast);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.3);
+}
+
+.search-icon {
+    position: absolute;
+    right: var(--spacing-lg);
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.project-links {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.project-link {
+    flex: 1;
+    text-align: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--surface);
+    color: var(--accent);
+    border-radius: 6px;
+    transition: all var(--transition-fast);
+    font-weight: 600;
+}
+
+.project-link:hover {
+    background: var(--accent);
+    color: white;
+}
+
+/* ============================================
+   SKILLS PROGRESS BARS
+   ============================================ */
+
+.skill-item {
+    margin-bottom: var(--spacing-md);
+}
+
+.skill-progress {
+    height: 6px;
+    background: rgba(74, 144, 226, 0.1);
+    border-radius: 3px;
+    margin-top: var(--spacing-xs);
+    overflow: hidden;
+}
+
+.skill-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 3px;
+    width: 0%;
+    animation: fillProgress 1.5s ease-out forwards;
+}
+
+@keyframes fillProgress {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+/* ============================================
+   TESTIMONIALS CAROUSEL
+   ============================================ */
+
+.testimonials {
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.06), rgba(124, 58, 237, 0.06));
+    position: relative;
+    overflow: hidden;
+}
+
+.testimonials-carousel {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto var(--spacing-xl);
+    min-height: 300px;
+}
+
+.testimonial-card {
+    background: var(--surface);
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    opacity: 0;
+    transition: all var(--transition) cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform: translateX(100px) rotateY(45deg);
+    position: absolute;
+    width: 100%;
+    pointer-events: none;
+}
+
+.testimonial-card.active {
+    opacity: 1;
+    transform: translateX(0) rotateY(0deg);
+    position: relative;
+    pointer-events: auto;
+    z-index: 2;
+}
+
+.testimonial-card.prev {
+    transform: translateX(-100px) rotateY(-45deg);
+    opacity: 0;
+}
+
+.testimonial-stars {
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.testimonial-text {
+    font-size: var(--text-lg);
+    color: var(--muted);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.8;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-name {
+    font-weight: 700;
+    color: var(--text);
+}
+
+.author-title {
+    font-size: var(--text-sm);
+    color: var(--muted);
+}
+
+.carousel-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.carousel-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 2px solid var(--border);
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all var(--transition-fast);
+}
+
+.carousel-btn:hover {
+    background: var(--accent);
+    color: white;
+    transform: scale(1.1);
+}
+
+.carousel-dots {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.carousel-dot.active {
+    background: var(--accent);
+    width: 24px;
+    border-radius: 4px;
+}
+
+/* ============================================
+   CONTACT FORM
+   ============================================ */
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto var(--spacing-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    background: var(--surface-2);
+    border: 2px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: var(--text-base);
+    transition: all var(--transition-fast);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--muted);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--surface);
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.2);
+}
+
+.form-error {
+    font-size: var(--text-sm);
+    color: #ef4444;
+    margin-top: var(--spacing-xs);
+    display: none;
+}
+
+.form-error.show {
+    display: block;
+}
+
+.btn-submit {
+    width: 100%;
+}
+
+.form-status {
+    text-align: center;
+    font-weight: 600;
+    display: none;
+    animation: slideInUp 0.3s ease-out;
+}
+
+.form-status.show {
+    display: block;
+}
+
+.btn-tertiary {
+    background: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+}
+
+.btn-tertiary:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateY(-3px);
+}
+

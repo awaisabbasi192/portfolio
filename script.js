@@ -1,4 +1,70 @@
 // ============================================
+// PARTICLE BACKGROUND
+// ============================================
+
+const initParticleBackground = () => {
+    const canvas = document.getElementById('particleCanvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 50;
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 1;
+            this.speedX = (Math.random() - 0.5) * 0.5;
+            this.speedY = (Math.random() - 0.5) * 0.5;
+            this.color = `rgba(74, 144, 226, ${Math.random() * 0.5})`;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+
+        requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+};
+
+// ============================================
 // THEME TOGGLE
 // ============================================
 
@@ -35,7 +101,6 @@ const initThemeToggle = () => {
             applyTheme(next);
         });
 
-        // Keyboard shortcut: Alt + T for theme toggle
         document.addEventListener('keydown', (e) => {
             if (e.altKey && e.key.toLowerCase() === 't') {
                 e.preventDefault();
@@ -62,7 +127,6 @@ const initNavigation = () => {
         });
     };
 
-    // IntersectionObserver for active section highlighting
     const observerOptions = {
         rootMargin: '-25% 0px -60% 0px',
         threshold: [0.1, 0.2, 0.35, 0.5]
@@ -80,7 +144,6 @@ const initNavigation = () => {
 
     sections.forEach(section => observer.observe(section));
 
-    // Smooth scroll for nav links
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -90,6 +153,240 @@ const initNavigation = () => {
             }
         });
     });
+};
+
+// ============================================
+// ANIMATED COUNTERS
+// ============================================
+
+const initAnimatedCounters = () => {
+    const counters = document.querySelectorAll('[data-target]');
+
+    const animateCounter = (el) => {
+        const target = parseInt(el.getAttribute('data-target'));
+        let current = 0;
+        const increment = target / 30;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                el.textContent = target;
+                clearInterval(timer);
+            } else {
+                el.textContent = Math.floor(current);
+            }
+        }, 30);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    counters.forEach(counter => observer.observe(counter));
+};
+
+// ============================================
+// SKILLS PROGRESS BARS
+// ============================================
+
+const initSkillBars = () => {
+    const bars = document.querySelectorAll('.skill-bar');
+
+    const animateBar = (bar) => {
+        const percent = parseInt(bar.getAttribute('data-percent'));
+        bar.style.width = percent + '%';
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateBar(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    bars.forEach(bar => observer.observe(bar));
+};
+
+// ============================================
+// PROJECT FILTER & SEARCH
+// ============================================
+
+const initProjectFilter = () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('projectSearch');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    const filterProjects = () => {
+        const activeFilter = document.querySelector('.filter-btn.active')?.getAttribute('data-filter') || 'all';
+        const searchTerm = (searchInput?.value || '').toLowerCase();
+
+        projectCards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            const tags = card.getAttribute('data-tags') || '';
+            const text = card.textContent.toLowerCase();
+
+            const matchesFilter = activeFilter === 'all' || category === activeFilter;
+            const matchesSearch = text.includes(searchTerm);
+
+            if (matchesFilter && matchesSearch) {
+                card.style.display = '';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 10);
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 300);
+            }
+        });
+    };
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterProjects();
+        });
+    });
+
+    if (searchInput) {
+        searchInput.addEventListener('input', filterProjects);
+    }
+};
+
+// ============================================
+// TESTIMONIALS CAROUSEL
+// ============================================
+
+const initTestimonialsCarousel = () => {
+    const cards = document.querySelectorAll('.testimonial-card');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const dotsContainer = document.querySelector('.carousel-dots');
+
+    if (cards.length === 0) return;
+
+    let currentIndex = 0;
+
+    // Create dots
+    cards.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = `carousel-dot${i === 0 ? ' active' : ''}`;
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer?.appendChild(dot);
+    });
+
+    const updateCarousel = () => {
+        cards.forEach((card, i) => {
+            card.classList.remove('active', 'prev');
+            if (i === currentIndex) {
+                card.classList.add('active');
+            } else if (i < currentIndex) {
+                card.classList.add('prev');
+            }
+        });
+
+        document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+        });
+    };
+
+    const goToSlide = (index) => {
+        currentIndex = index;
+        updateCarousel();
+    };
+
+    const nextSlide = () => {
+        currentIndex = (currentIndex + 1) % cards.length;
+        updateCarousel();
+    };
+
+    const prevSlide = () => {
+        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        updateCarousel();
+    };
+
+    prevBtn?.addEventListener('click', prevSlide);
+    nextBtn?.addEventListener('click', nextSlide);
+
+    updateCarousel();
+};
+
+// ============================================
+// CONTACT FORM
+// ============================================
+
+const initContactForm = () => {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        const statusEl = form.querySelector('.form-status');
+
+        // Form validation
+        let isValid = true;
+        form.querySelectorAll('.form-error').forEach(el => el.classList.remove('show'));
+
+        if (!data.name.trim()) {
+            showError(form, 'name', 'Name is required');
+            isValid = false;
+        }
+
+        if (!isValidEmail(data.email)) {
+            showError(form, 'email', 'Valid email is required');
+            isValid = false;
+        }
+
+        if (!data.subject.trim()) {
+            showError(form, 'subject', 'Subject is required');
+            isValid = false;
+        }
+
+        if (!data.message.trim()) {
+            showError(form, 'message', 'Message is required');
+            isValid = false;
+        }
+
+        if (!isValid) return;
+
+        // Simulate sending (in production, this would call your backend)
+        statusEl.textContent = 'Sending...';
+        statusEl.className = 'form-status show';
+
+        setTimeout(() => {
+            statusEl.textContent = '✓ Message sent successfully! I\'ll get back to you soon.';
+            statusEl.className = 'form-status show success';
+            form.reset();
+
+            setTimeout(() => {
+                statusEl.classList.remove('show');
+            }, 5000);
+        }, 1500);
+    });
+
+    function showError(form, fieldName, message) {
+        const input = form.querySelector(`#${fieldName}`);
+        const error = input.parentElement.querySelector('.form-error');
+        error.textContent = message;
+        error.classList.add('show');
+    }
+
+    function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
 };
 
 // ============================================
@@ -118,9 +415,7 @@ const initCopyToClipboard = () => {
 
                 await navigator.clipboard.writeText(value);
 
-                // Show feedback with animation
                 const originalText = el.textContent;
-                const originalClass = el.className;
                 el.textContent = '✓ Copied!';
                 el.style.color = 'var(--accent-2)';
                 el.style.fontWeight = '700';
@@ -135,13 +430,58 @@ const initCopyToClipboard = () => {
             }
         });
 
-        // Add cursor pointer and enhance hover state
         el.style.cursor = 'pointer';
     });
 };
 
 // ============================================
-// DYNAMIC YEAR IN FOOTER
+// DOWNLOAD CV
+// ============================================
+
+const initDownloadCV = () => {
+    const downloadBtn = document.getElementById('downloadCVBtn');
+    if (!downloadBtn) return;
+
+    downloadBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Create a simple text CV
+        const cvContent = `ZARQA ZULFIQAR
+Email: zarqa028@gmail.com
+Phone: +(92) 321-3243848
+Location: Lahore, Pakistan
+
+PROFESSIONAL SUMMARY
+Cyber Security professional with expertise in threat analysis, malware detection, and project management.
+
+WORK EXPERIENCE
+- Assistant (Anti Money Laundering) - FBR, Pakistan (June-August 2025)
+- Project Management Intern - Data Analytics Platform (August 2024)
+
+EDUCATION
+- BS Cyber Security, SUPERIOR University (2023-2026)
+- Inter FSc, KIPS (2021-2023)
+
+SKILLS
+Programming: Python, HTML/CSS, C++, Linux
+Cybersecurity: Malware Analysis, Digital Forensics, Threat Detection
+Project Management: SRS Gathering, Team Management, Stakeholder Analysis
+Tools: MS SQL Server, MS Excel, ChatGPT, Office 365`;
+
+        const blob = new Blob([cvContent], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Zarqa_Zulfiqar_CV.txt';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    });
+};
+
+// ============================================
+// DYNAMIC YEAR
 // ============================================
 
 const initDynamicYear = () => {
@@ -152,7 +492,7 @@ const initDynamicYear = () => {
 };
 
 // ============================================
-// SMOOTH SCROLL ENHANCEMENT
+// SMOOTH SCROLL
 // ============================================
 
 const initSmoothScroll = () => {
@@ -174,11 +514,10 @@ const initSmoothScroll = () => {
 };
 
 // ============================================
-// SCROLL ANIMATIONS & FADE-IN ON LOAD
+// SCROLL ANIMATIONS
 // ============================================
 
 const initScrollAnimations = () => {
-    // Animate elements on scroll
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -193,7 +532,6 @@ const initScrollAnimations = () => {
         });
     }, observerOptions);
 
-    // Observe cards and items
     const elementsToObserve = document.querySelectorAll(
         '.project-card, .education-card, .contact-card, .skill-group, .timeline-item, .stat-card'
     );
@@ -207,7 +545,7 @@ const initScrollAnimations = () => {
 };
 
 // ============================================
-// PARALLAX EFFECT ON SCROLL
+// PARALLAX EFFECT
 // ============================================
 
 const initParallaxEffect = () => {
@@ -216,8 +554,6 @@ const initParallaxEffect = () => {
 
     window.addEventListener('scroll', () => {
         const scrolled = window.pageYOffset;
-        const elementOffset = heroCircle.parentElement.offsetTop;
-
         if (window.innerWidth > 768) {
             heroCircle.style.transform = `translateY(${scrolled * 0.3}px)`;
         }
@@ -225,7 +561,7 @@ const initParallaxEffect = () => {
 };
 
 // ============================================
-// MOUSE TRACKING EFFECT
+// MOUSE TRACKING
 // ============================================
 
 const initMouseTrackingEffect = () => {
@@ -259,7 +595,6 @@ const initKeyboardNavigation = () => {
     const navLinks = Array.from(document.querySelectorAll('nav a[data-section]'));
 
     document.addEventListener('keydown', (e) => {
-        // Alt + Arrow navigation
         if (e.altKey && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
             const currentIndex = navLinks.findIndex(a =>
                 a.getAttribute('aria-current') === 'true'
@@ -285,7 +620,7 @@ const initKeyboardNavigation = () => {
 };
 
 // ============================================
-// BUTTON RIPPLE EFFECT
+// RIPPLE EFFECT
 // ============================================
 
 const initRippleEffect = () => {
@@ -302,7 +637,6 @@ const initRippleEffect = () => {
             ripple.style.top = y + 'px';
             ripple.classList.add('ripple');
 
-            // Remove existing ripples
             const existingRipples = this.querySelectorAll('.ripple');
             existingRipples.forEach(r => r.remove());
 
@@ -324,7 +658,6 @@ const initScrollToTopButton = () => {
     scrollButton.setAttribute('aria-label', 'Scroll to top');
     document.body.appendChild(scrollButton);
 
-    // Add styles dynamically
     const style = document.createElement('style');
     style.innerHTML = `
         .scroll-to-top {
@@ -349,21 +682,14 @@ const initScrollToTopButton = () => {
             justify-content: center;
             box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
         }
-
         .scroll-to-top.show {
             opacity: 1;
             visibility: visible;
         }
-
         .scroll-to-top:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 24px rgba(74, 144, 226, 0.4);
         }
-
-        .scroll-to-top:active {
-            transform: translateY(-1px);
-        }
-
         @media (max-width: 768px) {
             .scroll-to-top {
                 width: 45px;
@@ -376,7 +702,6 @@ const initScrollToTopButton = () => {
     `;
     document.head.appendChild(style);
 
-    // Show/hide button based on scroll
     window.addEventListener('scroll', () => {
         if (window.pageYOffset > 300) {
             scrollButton.classList.add('show');
@@ -385,7 +710,6 @@ const initScrollToTopButton = () => {
         }
     }, { passive: true });
 
-    // Scroll to top on click
     scrollButton.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
@@ -395,31 +719,13 @@ const initScrollToTopButton = () => {
 };
 
 // ============================================
-// PERFORMANCE: REQUEST ANIMATION FRAME
-// ============================================
-
-const initPerformanceOptimization = () => {
-    // Use RAF for scroll events
-    let ticking = false;
-    let lastScrollY = 0;
-
-    window.addEventListener('scroll', () => {
-        lastScrollY = window.pageYOffset;
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                // Animations will use RAF internally
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }, { passive: true });
-};
-
-// ============================================
 // INITIALIZATION
 // ============================================
 
 const init = () => {
+    // Particle background
+    initParticleBackground();
+
     // Core features
     initThemeToggle();
     initNavigation();
@@ -432,16 +738,20 @@ const init = () => {
     initParallaxEffect();
     initMouseTrackingEffect();
 
+    // New features
+    initAnimatedCounters();
+    initSkillBars();
+    initProjectFilter();
+    initTestimonialsCarousel();
+    initContactForm();
+    initDownloadCV();
+
     // Interactive features
     initKeyboardNavigation();
     initRippleEffect();
     initScrollToTopButton();
 
-    // Performance
-    initPerformanceOptimization();
-
-    // Log initialization
-    console.log('✅ Portfolio initialized successfully with all features enabled');
+    console.log('✅ Portfolio fully loaded with all premium features!');
 };
 
 // Initialize when DOM is ready
@@ -454,8 +764,8 @@ if (document.readyState === 'loading') {
 // Handle visibility change
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-        console.log('Portfolio tab is hidden');
+        console.log('Portfolio tab hidden');
     } else {
-        console.log('Welcome back!');
+        console.log('Welcome back to the portfolio!');
     }
 });
