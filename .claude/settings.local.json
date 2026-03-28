@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(building-portfolio-websites)",
+      "Bash(dir \"C:\\\\Users\\\\awais\\\\OneDrive\\\\Desktop\\\\zarka cv\")",
+      "Bash(start \"C:\\\\Users\\\\awais\\\\OneDrive\\\\Desktop\\\\zarka cv\\\\index.html\")",
+      "Bash(git --version:*)",
+      "Bash(git config:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
